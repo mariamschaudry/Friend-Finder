@@ -15,7 +15,8 @@ app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 
 // Public Directory to access CSS files //
-app.use(express.static(path.join(__dirname, "./public")));
+// app.use(express.static(path.resolve(__dirname,"./public")));
+app.use("/static", express.static(path.join(__dirname, "public")))
 
 // Router //
 
