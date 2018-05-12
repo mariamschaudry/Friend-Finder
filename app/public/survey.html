@@ -18,6 +18,9 @@
 <!-- CSS Stylesheet -->
 <link rel="stylesheet" href="../public/style.css" type="text/html">
 
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery.js"></script>
+
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
 
@@ -37,7 +40,7 @@
     <div class="form-group">
         <h3><strong>Question 1</strong></h3>
         <h4>Your mind is always buzzing with unexplored ideas and plans.</h4>
-            <select class="form-control" id="selectOption">
+            <select class="form-control" id="question1">
               <option>Select an Option</option>  
               <option>1 (Strongly Disagree)</option>
               <option>2</option>
@@ -49,7 +52,7 @@
     <div class="form-group">
         <h3><strong>Question 2</strong></h3>
         <h4>Generally speaking, you rely more on your experience than your imagination.</h4>
-            <select class="form-control" id="selectOption">
+            <select class="form-control" id="question2">
               <option>Select an Option</option>  
               <option>1 (Strongly Disagree)</option>
               <option>2</option>
@@ -62,7 +65,7 @@
     <div class="form-group">
         <h3><strong>Question 3</strong></h3>
         <h4>You find it early to stay relaxed and focused even when there is some pressure.</h4>
-            <select class="form-control" id="selectOption">
+            <select class="form-control" id="question3">
               <option>Select an Option</option>  
               <option>1 (Strongly Disagree)</option>
               <option>2</option>
@@ -75,7 +78,7 @@
     <div class="form-group">
         <h3><strong>Question 4</strong></h3>
         <h4>You rarely do something just out of sheer curiosity.</h4>
-            <select class="form-control" id="selectOption">
+            <select class="form-control" id="question4">
               <option>Select an Option</option>  
               <option>1 (Strongly Disagree)</option>
               <option>2</option>
@@ -87,7 +90,7 @@
     <div class="form-group">
         <h3><strong>Question 5</strong></h3>
         <h4>Your favorite season is Fall.</h4>
-            <select class="form-control" id="selectOption">
+            <select class="form-control" id="question5">
               <option>Select an Option</option>  
               <option>1 (Strongly Disagree)</option>
               <option>2</option>
@@ -100,7 +103,7 @@
     <div class="form-group">
         <h3><strong>Question 6</strong></h3>
         <h4>Lunch is your favorite meal of the day.</h4>
-            <select class="form-control" id="selectOption">
+            <select class="form-control" id="question6">
               <option>Select an Option</option>  
               <option>1 (Strongly Disagree)</option>
               <option>2</option>
@@ -113,7 +116,7 @@
     <div class="form-group">
         <h3><strong>Question 7</strong></h3>
         <h4>Having coffee in morning is the only way to start the day.</h4>
-            <select class="form-control" id="selectOption">
+            <select class="form-control" id="question7">
               <option>Select an Option</option>  
               <option>1 (Strongly Disagree)</option>
               <option>2</option>
@@ -126,7 +129,7 @@
     <div class="form-group">
         <h3><strong>Question 8</strong></h3>
         <h4>You enjoy bright colors more than darker colors.</h4>
-            <select class="form-control" id="selectOption">
+            <select class="form-control" id="question8">
               <option>Select an Option</option>  
               <option>1 (Strongly Disagree)</option>
               <option>2</option>
@@ -139,7 +142,7 @@
     <div class="form-group">
         <h3><strong>Question 9</strong></h3>
         <h4>You love spending time with friends, because it makes you feel more energetic.</h4>
-            <select class="form-control" id="selectOption">
+            <select class="form-control" id="question9">
               <option>Select an Option</option>  
               <option>1 (Strongly Disagree)</option>
               <option>2</option>
@@ -152,7 +155,7 @@
     <div class="form-group">
         <h3><strong>Question 10</strong></h3>
         <h4>Early birds are better than night owls.</h4>
-            <select class="form-control" id="selectOption">
+            <select class="form-control" id="question10">
               <option>Select an Option</option>  
               <option>1 (Strongly Disagree)</option>
               <option>2</option>
@@ -162,13 +165,13 @@
             </select>
           </div>
           <hr>
-          <button type="button" class="btn btn-info btn-lg btn-block">Submit Responses <i class = "fa fa-angle-double-right"></i></button>
+          <button type="button" class="btn btn-info btn-lg btn-block" id= "submitButton" >Submit Responses <i class = "fa fa-angle-double-right"></i></button>
           <br>
     </div>
 </div>
 
       <!-- Modal -->
-      <div class="modal fade" id="modal" role="dialog">
+      <div class="modal" id="modal" role="dialog">
         <div class="modal-dialog modal-dialog-centered">
 
           <div class="modal-content">
@@ -186,10 +189,41 @@
             </div>
        </div>
 
-    <script type = "text/JavaScript">
+    <script type = "text/javascript">
+        $(document).ready(function() {
+
+            // Activate Submit Button // 
+            $("#submitButton").on("click", function(event) {
+                event.preventDefault(); 
+
+                // Grab user input //
+                var userInput = {
+                    name: $("#name").val().trim(),
+                    photo: $("#photo").val().trim(),
+                    scores: [
+                        $("#question1").val().trim(),
+                        $("#question2").val().trim(),
+                        $("#question3").val().trim(),
+                        $("#question4").val().trim(),
+                        $("#question5").val().trim(),
+                        $("#question6").val().trim(),
+                        $("#question7").val().trim(),
+                        $("#question8").val().trim(),
+                        $("#question9").val().trim(),
+                        $("#question10").val().trim()
+                    ]
+                };
+                // Add user input to friends list // 
+                $.post("/api/friends", userInput)
+                    .done(function(data) {
+                        $("#userMatch").html(data.matchName);
+                        $("#userMatchImage").attr("src", data.matchImage);
+                        $("#modal").modal('toggle');
+                    });
+            });
+        });
+
     </script>
-
-
 
 </body>
 </html>

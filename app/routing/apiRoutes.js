@@ -3,7 +3,7 @@ var path = require("path");
 
 // Load Data // 
 
-var friendsData= require("../data/friends.js");
+var friends= require("../data/friends.js");
 
 // Export API Routes //
 
