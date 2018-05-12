@@ -175,8 +175,9 @@
 </div>
        <!-- Modal HTML embedded directly into document -->
             <div id="ex1" class="modal">
-                    <p>Thanks for clicking. That felt good.</p>
-                    <a href="/survey" rel="modal:close">Fill out the survey again!</a>
+                    <p>Your closest match is: </p>
+                    <h4 id="userMatchName"></h4>
+                    <a href="http://localhost8080/survey" rel="modal:close">Fill out the survey again!</a>
             </div>
 
     <script type = "text/javascript">
@@ -206,8 +207,9 @@
                 // Add user input to friends list // 
                 $.post("/api/friends", userInput)
                     .done(function(data) {
-                        $("#userMatch").html(data.matchName);
-                        $("#userMatchImage").attr("src", data.matchImage);
+                        console.log(data);
+                        $("#userMatchName").html(data.matchName);
+                        $("#matchImage").attr("src", data.matchImage);
                         $("#ex1").modal('open');
                     });
             });

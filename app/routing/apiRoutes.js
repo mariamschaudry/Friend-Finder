@@ -28,6 +28,8 @@ module.exports = function(app) {
 
         // Examine existing friends in the list //
         for (var i = 0; i < friends.length; i++) {
+            var currentFriend = friends[i];
+            console.log(currentFriend);
 
             // Compute the differences //
             var difference = 0; 
@@ -39,10 +41,12 @@ module.exports = function(app) {
             if (difference < totalDifference) {
                 totalDifference = difference; 
                 matchName = friends[i].name;
-                matchImage = friends [i].photo;
+                matchImage = friends[i].photo;
             }
 
         }
+
+        console.log("matchName", matchName);
 
         // Add the new user //
         friends.push(input); 
