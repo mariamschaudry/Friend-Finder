@@ -14,6 +14,9 @@ var PORT = process.env.PORT || 8080;
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 
+// Public Directory to access CSS files //
+app.use(express.static(path.join(__dirname, "./public")));
+
 // Router //
 
 require("./app/routing/apiRoutes.js")(app);
@@ -24,3 +27,4 @@ require("./app/routing/htmlRoutes.js")(app);
 app.listen(PORT, function() {
     console.log("Friend-Finder app is listening on PORT: " + PORT);
 });
+
