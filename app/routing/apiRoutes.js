@@ -1,5 +1,5 @@
 // Dependencies //
-var path = require("path");
+// var path = require("path");
 
 // Load Data // 
 
@@ -33,11 +33,21 @@ module.exports = function(app) {
 
             // Compute the differences //
             var difference = 0; 
+
+            
+
             for (var j = 0; j < response.length; j++) {
-                difference += Math.abs(friends[i].scores[j] - response[j]);
+                console.log("Check type: ", friends[i].scores[j]);
+                console.log("Check type: ", response[j]);
+                difference += Math.abs(parseInt(friends[i].scores[j]) - parseInt(response[j]));
             }
 
             // If lowest difference, record friend match // 
+            console.log("This is total difference", totalDifference);
+            console.log("Difference", difference);
+
+            console.log("friends", friends[i]);
+
             if (difference < totalDifference) {
                 totalDifference = difference; 
                 matchName = friends[i].name;
@@ -51,8 +61,14 @@ module.exports = function(app) {
         // Add the new user //
         friends.push(input); 
 
-        // Send appropriate response //
-        res.json({status: "OK", matchName: matchName, matchImage: matchImage})
+        console.log(matchImage);
 
+        // Send appropriate response //
+        res.json(
+            {
+                status: "OK", 
+                matchName: matchName, 
+                matchImage: matchImage
+            });
     });
 };
